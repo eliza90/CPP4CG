@@ -20,7 +20,11 @@ int main(int argc, char** argv)
 {
 	// TODO 4.3: test factory and delegates here
 	/*!!*///std::cerr << "main43: (PARTS ARE) UNIMPLEMENTED" << std::endl;
-	std::shared_ptr< ::controller::Engine > game_engine( new ::controller::GlutEngine );
+		
+	//std::shared_ptr< ::model::Game > testgame(new ::model::Game());
+	//testgame->addGameObject(std::shared_ptr<model::GameObject>(new model::TestGameObject(true, "TestGameObject")));
+	
+	std::shared_ptr< ::controller::Engine > game_engine(new ::controller::GlutEngine);
 	
 	game_engine->init( argc, argv );
 	game_engine->run();

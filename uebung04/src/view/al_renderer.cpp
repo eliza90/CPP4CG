@@ -24,5 +24,22 @@ AlRenderer::delegate_factory_type const& AlRenderer::audible_factory() const
 void AlRenderer::auralize_model()
 {
   // TODO 4.3: call delegates
-  /*!!*/std::cerr << "!! view::AlRenderer::auralize_model: (PARTS ARE) UNIMPLEMENTED." << std::endl; 
+  /*!!*///std::cerr << "!! view::AlRenderer::auralize_model: (PARTS ARE) UNIMPLEMENTED." << std::endl; 
+
+  struct AudioDelegate : public view::AlRenderer::Audible{
+	  AudioDelegate(const std::shared_ptr<::model::TestGameObject> _l) : l(_l){}
+	  virtual void auralize(AlRenderer&){
+		  std::cout << "view::AlRenderer::auralize: Test Sound!" << std::endl;
+	  }
+	  std::shared_ptr<model::TestGameObject> l;
+  };
+
+	_audible_factory.register_module<model::TestGameObject>(
+		[](const std::shared_ptr <model::TestGameObject>& _l){ return std::make_shared<AudioDelegate>(_l); }
+  );
+
+  std::vector<std::shared_ptr< model::GameObject>> myObjects(game_model()->objects());
+
+  for (auto o : myObjects)
+	  _audible_factory.create_for(o)->auralize(*this);
 }

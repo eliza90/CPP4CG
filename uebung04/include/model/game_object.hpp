@@ -27,7 +27,7 @@ namespace model
       void registerData( const std::shared_ptr< DataType >& );
 
       template< typename DataType >
-      std::shared_ptr< DataType > getData();
+	  std::shared_ptr< DataType > getData();
 
       // dynamic flag can be used to mark object as static/dynamic in the game.
       // (this can be used as a hint to the game logic, indicating if object needs to be "advanced")

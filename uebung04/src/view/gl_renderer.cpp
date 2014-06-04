@@ -35,7 +35,22 @@ void GlRenderer::visualize_model( GlutWindow& w )
   glLoadIdentity(); //Reset the camera
   gluPerspective(45., w.width() / double(w.height()), .5, 100.);
 
-  //handle delegates
+  struct VisualDelegate : public Drawable{
+	  VisualDelegate(const std::shared_ptr<::model::TestGameObject> _l) : l(_l){}
+	  virtual void visualize(GlRenderer&, GlutWindow&) {
+		  std::cout << "view::GlRenderer::visualize: Test Image!\n" << std::endl;
+	  }
+	  std::shared_ptr<model::TestGameObject> l;
+  };
+  
+  _drawable_factory.register_module<model::TestGameObject>(
+	  [](const std::shared_ptr <model::TestGameObject>& _l){ return std::make_shared<VisualDelegate>(_l); }
+  );
+
+  std::vector<std::shared_ptr< model::GameObject>> myObjects(game_model()->objects());//vektor mit den game objekten
+  
+  for (auto o : myObjects)
+	  _drawable_factory.create_for(o)->visualize(*this, w);
 
   glutSwapBuffers();
 }
