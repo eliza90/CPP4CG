@@ -16,7 +16,7 @@ bool Logic::advance_model( const ::controller::InputEventHandler::keyboard_event
 		virtual std::string test_delegate() = 0;
 	};
 	struct TestDelegate : public DelegateExtractor{
-		TestDelegate(const std::shared_ptr<model::TestGameObject> _l) : l(_l){}
+		TestDelegate(const std::shared_ptr<::model::TestGameObject> _l) : l(_l){}
 		bool advance(Logic&, controller::InputEventHandler::keyboard_event const&){ return true; }
 		virtual std::string test_delegate(){ return "test advance"; }
 		std::shared_ptr<model::TestGameObject> l;

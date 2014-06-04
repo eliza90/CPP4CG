@@ -1,11 +1,13 @@
 # include "model/game.hpp"
 
+# include "model/test_game_object.hpp"
+
 using namespace model;
 
 Game::Game() 
 : _timestamp( std::chrono::steady_clock::now() )
 { 
-	//addGameObject(shared_ptr< TestGameObject >(new TestGameObject()));
+	addGameObject(std::shared_ptr<GameObject>(new TestGameObject(true,"TestGameObject")));
 }
 
 void Game::addGameObject( std::shared_ptr< GameObject > const& o )

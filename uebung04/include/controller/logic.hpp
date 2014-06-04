@@ -4,6 +4,8 @@
 
 # include "model/game.hpp"
 
+# include "model/test_game_object.hpp"
+
 # include "factory_map.hpp"
 
 namespace controller
