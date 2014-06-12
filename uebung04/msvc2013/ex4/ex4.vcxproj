@@ -20,7 +20,6 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
-    <CharacterSet>NotSet</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -91,6 +90,11 @@
     <ClInclude Include="..\..\include\controller\input_event_handler.hpp" />
     <ClInclude Include="..\..\include\controller\logic.hpp" />
     <ClInclude Include="..\..\include\factory_map.hpp" />
+    <ClInclude Include="..\..\include\flappy_box\controller\boxObjectLogic.hpp" />
+    <ClInclude Include="..\..\include\flappy_box\controller\flappyEngine.hpp" />
+    <ClInclude Include="..\..\include\flappy_box\model\box.hpp" />
+    <ClInclude Include="..\..\include\flappy_box\view\boxAudible.hpp" />
+    <ClInclude Include="..\..\include\flappy_box\view\boxDrawable.hpp" />
     <ClInclude Include="..\..\include\math.hpp" />
     <ClInclude Include="..\..\include\model\game.hpp" />
     <ClInclude Include="..\..\include\model\game_object.hpp" />
@@ -103,13 +107,21 @@
     <ClCompile Include="..\..\src\controller\engine.cpp" />
     <ClCompile Include="..\..\src\controller\glut_engine.cpp" />
     <ClCompile Include="..\..\src\controller\logic.cpp" />
-    <ClCompile Include="..\..\src\main41.cpp" />
+    <ClCompile Include="..\..\src\flappy_box\controller\boxObjectLogic.cpp" />
+    <ClCompile Include="..\..\src\flappy_box\controller\flappyEngine.cpp" />
+    <ClCompile Include="..\..\src\flappy_box\model\box.cpp" />
+    <ClCompile Include="..\..\src\flappy_box\view\boxAudible.cpp" />
+    <ClCompile Include="..\..\src\flappy_box\view\boxDrawable.cpp" />
+    <ClCompile Include="..\..\src\main44.cpp" />
     <ClCompile Include="..\..\src\model\game.cpp" />
     <ClCompile Include="..\..\src\model\game_object.cpp" />
     <ClCompile Include="..\..\src\model\test_game_object.cpp" />
     <ClCompile Include="..\..\src\view\al_renderer.cpp" />
     <ClCompile Include="..\..\src\view\glut_window.cpp" />
     <ClCompile Include="..\..\src\view\gl_renderer.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="extlibs.props" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

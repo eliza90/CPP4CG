@@ -28,7 +28,7 @@ GlRenderer::delegate_factory_type const& GlRenderer::drawable_factory() const
 void GlRenderer::visualize_model( GlutWindow& w )
 {
   // TODO 4.3: initialize OpenGL context, call delegates and swap buffers
-  /*!!*/std::cerr << "!! view::GlRenderer::visualize_model: (PARTS ARE) UNIMPLEMENTED." << std::endl; 
+  /*!!*///std::cerr << "!! view::GlRenderer::visualize_model: (PARTS ARE) UNIMPLEMENTED." << std::endl; 
   glClearColor(0.0f, 1.0f, 0.0f, 1.0f);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glMatrixMode(GL_PROJECTION);

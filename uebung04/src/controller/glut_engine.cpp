@@ -32,7 +32,7 @@ void GlutEngine::init( int& argc, char** argv )
 
 void GlutEngine::run()
 {	  
-  __controller__glut_engine__step_func();//eingefügt
+  //__controller__glut_engine__step_func();//eingefügt
   // Run game.
   glutMainLoop();
 }

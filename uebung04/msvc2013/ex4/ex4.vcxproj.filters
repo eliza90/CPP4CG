@@ -93,11 +93,23 @@
     <ClInclude Include="..\..\include\model\test_game_object.hpp">
       <Filter>Header Files\model</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\flappy_box\model\box.hpp">
+      <Filter>Header Files\flappy_box\model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\flappy_box\controller\boxObjectLogic.hpp">
+      <Filter>Header Files\flappy_box\controller</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\flappy_box\view\boxAudible.hpp">
+      <Filter>Header Files\flappy_box\view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\flappy_box\view\boxDrawable.hpp">
+      <Filter>Header Files\flappy_box\view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\flappy_box\controller\flappyEngine.hpp">
+      <Filter>Header Files\flappy_box\controller</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\main41.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\controller\engine.cpp">
       <Filter>Source Files\controller</Filter>
     </ClCompile>
@@ -125,5 +137,26 @@
     <ClCompile Include="..\..\src\model\test_game_object.cpp">
       <Filter>Source Files\model</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\flappy_box\model\box.cpp">
+      <Filter>Source Files\flappy_box\model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\flappy_box\controller\boxObjectLogic.cpp">
+      <Filter>Source Files\flappy_box\controller</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\flappy_box\view\boxAudible.cpp">
+      <Filter>Source Files\flappy_box\view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\flappy_box\view\boxDrawable.cpp">
+      <Filter>Source Files\flappy_box\view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\flappy_box\controller\flappyEngine.cpp">
+      <Filter>Source Files\flappy_box\controller</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\main44.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="extlibs.props" />
   </ItemGroup>
 </Project>
