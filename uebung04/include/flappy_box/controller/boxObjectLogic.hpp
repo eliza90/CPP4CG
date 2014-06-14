@@ -1,6 +1,5 @@
 # pragma once
 # include "controller/logic.hpp"
-# include "flappy_box/model/box.hpp"
 
 namespace controller
 {
@@ -14,4 +13,4 @@ namespace controller
 
   }; // BoxObjectLogic
 
-} // model::
+} // controller::

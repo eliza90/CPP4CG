@@ -99,6 +99,7 @@
     <ClInclude Include="..\..\include\model\game.hpp" />
     <ClInclude Include="..\..\include\model\game_object.hpp" />
     <ClInclude Include="..\..\include\model\test_game_object.hpp" />
+    <ClInclude Include="..\..\include\testDelegates.hpp" />
     <ClInclude Include="..\..\include\view\al_renderer.hpp" />
     <ClInclude Include="..\..\include\view\glut_window.hpp" />
     <ClInclude Include="..\..\include\view\gl_renderer.hpp" />

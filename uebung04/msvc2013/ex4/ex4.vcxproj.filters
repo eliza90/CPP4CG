@@ -108,6 +108,9 @@
     <ClInclude Include="..\..\include\flappy_box\controller\flappyEngine.hpp">
       <Filter>Header Files\flappy_box\controller</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\testDelegates.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\controller\engine.cpp">

@@ -5,16 +5,17 @@
 # include "model/game.hpp"
 
 # include "model/test_game_object.hpp"
+# include "testDelegates.hpp"
 
 # include "factory_map.hpp"
+# include "flappy_box/model/box.hpp"
 
 namespace controller
 {
   class Logic
   {
     public:
-      struct ObjectLogic : public model::GameObject::Data
-      {
+      struct ObjectLogic : public model::GameObject::Data{
         // Advance Game and handle keyboard_event. Returns true if event has been handled.
         virtual bool advance( Logic&, InputEventHandler::keyboard_event const& ) = 0;
       };

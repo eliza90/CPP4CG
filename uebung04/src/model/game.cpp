@@ -7,7 +7,7 @@ using namespace model;
 Game::Game() 
 : _timestamp( std::chrono::steady_clock::now() )
 { 
-	//addGameObject(std::shared_ptr<GameObject>(new TestGameObject(true,"TestGameObject")));//überdenken
+	//addGameObject(std::shared_ptr<GameObject>(new TestGameObject(true,"TestGameObject")));
 }
 
 void Game::addGameObject( std::shared_ptr< GameObject > const& o )

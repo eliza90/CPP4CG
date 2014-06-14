@@ -8,7 +8,7 @@ bool BoxObjectLogic::advance(Logic& logic, controller::InputEventHandler::keyboa
 	//Die Masse des Spielobjektes kann 1[kg] gleichgesetzt werden.
 	//Verfahren um die Bewegungsgleichung zu integrieren -Euler Verfahren
 	//Nutzten sie bei der Umsetzung den von model::Game::timestep bereitgestellten Zeitschritt.
-
+	
 	vec3_type a = l->getAcceleration();
 	vec3_type v = l->getVelocity();
 	vec3_type position = l->getPosition();

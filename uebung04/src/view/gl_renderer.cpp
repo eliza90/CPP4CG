@@ -4,11 +4,16 @@
 
 # include "GL/freeglut.h"
 
+# include "flappy_box/model/box.hpp"
+# include "flappy_box/view/boxDrawable.hpp"
+
 using namespace ::view;
 
-GlRenderer::GlRenderer( std::shared_ptr< model::Game const > const& g )
-: _game_model( g )
-{}
+GlRenderer::GlRenderer( std::shared_ptr< model::Game const > const& g ): _game_model( g ){
+	_drawable_factory.register_module<model::Box>(//model::Box>(myBox_ptr
+		[](const std::shared_ptr <model::Box>& _l){ return std::make_shared<view::BoxDrawable>(_l); }
+	);
+}
 
 std::shared_ptr< ::model::Game const > const& GlRenderer::game_model() const
 {
@@ -35,22 +40,37 @@ void GlRenderer::visualize_model( GlutWindow& w )
   glLoadIdentity(); //Reset the camera
   gluPerspective(45., w.width() / double(w.height()), .5, 100.);
 
-  struct VisualDelegate : public Drawable{
-	  VisualDelegate(const std::shared_ptr<::model::TestGameObject> _l) : l(_l){}
-	  virtual void visualize(GlRenderer&, GlutWindow&) {
-		  std::cout << "view::GlRenderer::visualize: Test Image!\n" << std::endl;
-	  }
-	  std::shared_ptr<model::TestGameObject> l;
-  };
-  
-  _drawable_factory.register_module<model::TestGameObject>(
-	  [](const std::shared_ptr <model::TestGameObject>& _l){ return std::make_shared<VisualDelegate>(_l); }
-  );
+  //43 Variante 1 Delegates jedes Mal erstellen
+  //struct VisualDelegate : public view::GlRenderer::Drawable{
+	 // VisualDelegate(const std::shared_ptr<::model::TestGameObject> _l) : l(_l){}
+	 // virtual void visualize(GlRenderer&, GlutWindow&) {
+		//  std::cout << "view::GlRenderer::visualize: Test Image!\n" << std::endl;
+	 // }
+	 // std::shared_ptr<model::TestGameObject> l;
+  //};
+  //
+  //_drawable_factory.register_module<model::TestGameObject>(
+	 // [](const std::shared_ptr <model::TestGameObject>& _l){ return std::make_shared<VisualDelegate>(_l); }
+  //);
 
-  std::vector<std::shared_ptr< model::GameObject>> myObjects(game_model()->objects());//vektor mit den game objekten
-  
-  for (auto o : myObjects)
-	  _drawable_factory.create_for(o)->visualize(*this, w);
+  //std::vector<std::shared_ptr< model::GameObject>> myObjects(game_model()->objects());//vektor mit den game objekten
+  //
+  //for (auto o : myObjects)
+	 // _drawable_factory.create_for(o)->visualize(*this, w);
+
+  //43 Flappy Box Variante 2(get/setData)
+  std::vector<std::shared_ptr<model::GameObject>> myObjects(game_model()->objects());//vektor mit den game objekten
+
+  for (auto o : myObjects){
+
+	  auto visualDelegate(o->getData<view::GlRenderer::Drawable>());
+
+	  if (visualDelegate == nullptr){
+		  o->registerData(_drawable_factory.create_for(o));//delegate aus der factorymap
+	  }
+	  auto visual(o->getData<view::GlRenderer::Drawable>());
+	  visual->visualize(*this, w);
+  }
 
   glutSwapBuffers();
 }

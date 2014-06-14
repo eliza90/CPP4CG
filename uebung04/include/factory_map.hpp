@@ -12,19 +12,6 @@ class factory_map
 
   public:
 
-	  /*
-	  factory_map< model::GameObject, DelegateExtractor> extractor_toolbox;
-
-	extractor_toolbox.register_module<TestGameObj>(
-		[](const std::shared_ptr < TestGameObj >& l){ return std::make_shared<TestDelegate>(l); }
-	);
-
-	extractor_toolbox.register_module<TestGameObj>(&test);
-	void test(const std::shared_prt<TestGameObj>& l){ return std::make_sh...}
-
-	void register_module(&test){
-	  */
-    // Register factory module for key/input type In.
     template< typename In >
     void register_module( const std::function< std::shared_ptr< Out > ( const std::shared_ptr< In >& ) >& inner_function )
     {

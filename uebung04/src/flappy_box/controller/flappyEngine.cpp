@@ -3,28 +3,27 @@
 
 using namespace controller;
 
-void FlappyEngine::init(int& argc, char** argv){	
+void FlappyEngine::init(int& argc, char** argv){			
 	//initialisierung der Basisklasse
-	GlutEngine::init(argc,argv);
-	
-	//alutInit -> soundbibliothek initialisieren
-	model::Box myBox = model::Box();
-	//Spielobj erzeugen 
-	std::shared_ptr<::model::GameObject> myBox_ptr = std::make_shared<model::GameObject>(myBox);
+	GlutEngine::init(argc, argv);
 
-	std::shared_ptr<model::Box> box_ptr = std::make_shared<model::Box>(myBox);
+	// Init openAL
+	alutInit(0, NULL);
+
+	std::shared_ptr<model::Box> box_ptr = std::make_shared<model::Box>(model::Box());
+	//Komponenten MVC
 	controller::BoxObjectLogic logic = controller::BoxObjectLogic(box_ptr);
 	view::BoxDrawable drawable = view::BoxDrawable(box_ptr);
 	view::BoxAudible audible = view::BoxAudible(box_ptr);
-
+	//Spielobj erzeugen 
+	std::shared_ptr<::model::GameObject> myBox_ptr = std::make_shared<model::GameObject>(box_ptr);
+	
 	//und dem Model hinzufügen
-	game_model()->addGameObject(myBox_ptr);
-
-	//controller::BoxObjectLogic logic = controller::BoxObjectLogic(myBox_ptr);
-
+	game_model()->addGameObject(box_ptr);
+	
 	//Delegierten der Komponenten bei den Factories registrieren
 	//logikObject?
-	//controller::Logic::logic_factory().register_module<myBox_ptr>(//model::Box>(
+	//controller::Logic::logic_factory().register_module<model::Box>(//model::Box>(myBox_ptr
 	//	[](const std::shared_ptr <model::Box>& _l){ return std::make_shared<controller::BoxObjectLogic>(_l);}
 	//);
 
