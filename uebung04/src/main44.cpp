@@ -17,8 +17,7 @@
 #include <memory>
 #include "flappy_box/controller/flappyEngine.hpp"
 
-int main( int argc, char** argv )
-{
+int main( int argc, char** argv ){
   std::shared_ptr< ::controller::Engine > game_engine( new controller::FlappyEngine );
 
   game_engine->init( argc, argv );

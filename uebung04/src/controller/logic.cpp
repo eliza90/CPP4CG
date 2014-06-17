@@ -5,9 +5,6 @@
 using namespace ::controller;
 
 Logic::Logic( const std::shared_ptr< ::model::Game >& g ) : _model( g ) {
-	logic_factory().register_module<model::Box>(
-		[](const std::shared_ptr <model::Box>& _l){ return std::make_shared<controller::BoxObjectLogic>(_l); }
-	);
 }
 
 bool Logic::advance_model( const ::controller::InputEventHandler::keyboard_event& ev )

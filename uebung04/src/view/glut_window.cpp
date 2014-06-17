@@ -12,6 +12,8 @@ GlutWindow::GlutWindow(const std::string& name, size_t width, size_t height,
 : _name( name )
 , _width( width )
 , _height( height )
+, shrPointer_glRenderer(pointer_Renderer)
+, shrPointer_EventHandler(pointer_EventHandler)
 {
   // TODO 4.1: assign input event handler and renderer
   //std::cerr << "!! view::GlutWindow::GlutWindow: (PARTS ARE) UNIMPLEMENTED." << std::endl; 
@@ -125,10 +127,8 @@ void GlutWindow::glutKeyboard( unsigned char glut_key, int mouse_x, int mouse_y 
   if( ! win )
     throw std::out_of_range( "view::GlutWindow::glutKeyboard: Could not get pointer to GlutWindow." );
 
-  std::shared_ptr<controller::InputEventHandler>& keyboard = win->getEventHandler();
-
   /*TODO 4.1: input event handler is valid*/
-  if (keyboard != nullptr){
+  if (win->getEventHandler()!= nullptr){
 	   // TODO 4.1:  create keyboard-event data structure and forward it to the event handler
 	  //std::cerr << "!! view::GlutWindow::glutKeyboard: (PARTS ARE) UNIMPLEMENTED." << std::endl;
 
@@ -140,7 +140,7 @@ void GlutWindow::glutKeyboard( unsigned char glut_key, int mouse_x, int mouse_y 
 	  if (GetKeyState(VK_SHIFT) == 1) { k_event.SHIFT_ACTIVE; }
 	  if (GetKeyState(VK_CONTROL) == 1) { k_event.CTRL_ACTIVE; }
 	  if (GetKeyState(VK_MENU) == 1) { k_event.ALT_ACTIVE; }
-	  keyboard->handle(k_event);
+	  win->getEventHandler()->handle(k_event);
   }
   else{
 	  std::clog << "view::GlutWindow::glutKeyboard: no InputEventHandler attached (which could handle the event)." << std::endl;

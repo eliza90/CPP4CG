@@ -6,9 +6,6 @@
 using namespace ::view;
 
 AlRenderer::AlRenderer( std::shared_ptr< model::Game const > const& g ) : _game_model( g ) {
-	_audible_factory.register_module<model::Box>(//model::Box>(myBox_ptr
-		[](const std::shared_ptr <model::Box>& _l){ return std::make_shared<view::BoxAudible>(_l); }
-	);
 }
 
 std::shared_ptr< model::Game const > const& AlRenderer::game_model() const

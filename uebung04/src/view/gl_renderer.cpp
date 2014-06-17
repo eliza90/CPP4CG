@@ -10,9 +10,6 @@
 using namespace ::view;
 
 GlRenderer::GlRenderer( std::shared_ptr< model::Game const > const& g ): _game_model( g ){
-	_drawable_factory.register_module<model::Box>(//model::Box>(myBox_ptr
-		[](const std::shared_ptr <model::Box>& _l){ return std::make_shared<view::BoxDrawable>(_l); }
-	);
 }
 
 std::shared_ptr< ::model::Game const > const& GlRenderer::game_model() const
@@ -38,7 +35,7 @@ void GlRenderer::visualize_model( GlutWindow& w )
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity(); //Reset the camera
-  gluPerspective(45., w.width() / double(w.height()), .5, 100.);
+  gluPerspective(45., w.width() / double(w.height()), .5, 100.); 
 
   //43 Variante 1 Delegates jedes Mal erstellen
   //struct VisualDelegate : public view::GlRenderer::Drawable{
@@ -59,6 +56,7 @@ void GlRenderer::visualize_model( GlutWindow& w )
 	 // _drawable_factory.create_for(o)->visualize(*this, w);
 
   //43 Flappy Box Variante 2(get/setData)
+  //std::cout << "!! view::GlRenderer::visualize_model: Test Image." << std::endl;
   std::vector<std::shared_ptr<model::GameObject>> myObjects(game_model()->objects());//vektor mit den game objekten
 
   for (auto o : myObjects){

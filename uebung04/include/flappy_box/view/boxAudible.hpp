@@ -10,16 +10,17 @@
 namespace view{
 
 	class BoxAudible: public view::AlRenderer::Audible{ 
-		ALuint _al_box_source[1];
+		ALuint _al_box_source1;
+		ALuint _al_box_buffer1;
+		ALuint _al_box_source2;
+		ALuint _al_box_buffer2;
 	public:
 		BoxAudible(const std::shared_ptr<::model::Box> _l);
 		virtual void auralize(AlRenderer&);
 		std::shared_ptr<::model::Box> l;	
 
 		double const base_frequency = 400;//hz
-		double const target_frequency = 100;
-
-		
+		double const target_frequency = 100;	
   }; // BoxAudible
 
 } // model::

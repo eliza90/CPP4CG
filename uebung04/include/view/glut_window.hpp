@@ -29,7 +29,10 @@ namespace view
 
      // TODO 4.1: declare getters for event handler and renderer
 	  std::shared_ptr<GlRenderer>& getRenderer() { return shrPointer_glRenderer; }
+	  void setGlRendererPtr(std::shared_ptr<view::GlRenderer>& rend) { shrPointer_glRenderer = rend; };
+
 	  std::shared_ptr<controller::InputEventHandler>& getEventHandler(){ return shrPointer_EventHandler;}
+	  void setInputEventHandler(std::shared_ptr<controller::InputEventHandler>& handler) { shrPointer_EventHandler = handler; };
 
       // Request window redisplay.
       void invalidate();

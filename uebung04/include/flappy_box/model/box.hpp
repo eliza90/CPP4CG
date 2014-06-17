@@ -19,11 +19,12 @@ namespace model {
 	  vec3_type getAcceleration(){ return acceleration; }
 	  double getDegree(){ return degree; }
 
-	  //inline setter
-	  void setPosition(vec3_type p){ position = p; }
-	  void setVelocity(vec3_type v){ velocity = v; }
-	  void setAcceleration(vec3_type a){ acceleration = a; }
-	  double setDegree(float d){ degree = d; }
+	  //setter
+	  void setPosition(vec3_type pos);
+	  void setPosition(double x, double y, double z);
+	  void setVelocity(double vx, double vy, double vz);
+	  void setAcceleration(double ax, double ay, double az);
+	  void setDegree(double d);
 
   }; // Box
 
