@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros">
+	<OpenAL_IncludeDir>F:\Studium\1.Semester\C++CG\Uebungen\Uebung4_Engine\TUD-MSVC2013-Win32-Libraries\OpenAL\include\</OpenAL_IncludeDir>
+    <OpenAL_LibDir>F:\Studium\1.Semester\C++CG\Uebungen\Uebung4_Engine\TUD-MSVC2013-Win32-Libraries\OpenAL\lib\</OpenAL_LibDir>
+	<freeALUT_IncludeDir>F:\Studium\1.Semester\C++CG\Uebungen\Uebung4_Engine\TUD-MSVC2013-Win32-Libraries\OpenAL\include\</freeALUT_IncludeDir>
+    <freeALUT_LibDir>F:\Studium\1.Semester\C++CG\Uebungen\Uebung4_Engine\TUD-MSVC2013-Win32-Libraries\OpenAL\lib\</freeALUT_LibDir>
+    <freeGLUT_IncludeDir>F:\Studium\1.Semester\C++CG\Uebungen\Uebung4_Engine\TUD-MSVC2013-Win32-Libraries\Freeglut\include\</freeGLUT_IncludeDir>
+    <freeGLUT_LibDir>F:\Studium\1.Semester\C++CG\Uebungen\Uebung4_Engine\TUD-MSVC2013-Win32-Libraries\Freeglut\lib\</freeGLUT_LibDir>
+    <eigen_IncludeDir>F:\Studium\1.Semester\C++CG\Uebungen\Uebung5\Aufgabe_5\ex5\include\eigen\</eigen_IncludeDir>
+  </PropertyGroup>
+  <PropertyGroup />
+  <ItemDefinitionGroup />
+  <ItemGroup>
+    <BuildMacro Include="OpenAL_IncludeDir">
+      <Value>$(OpenAL_IncludeDir)</Value>
+    </BuildMacro>
+    <BuildMacro Include="OpenAL_LibDir">
+      <Value>$(OpenAL_LibDir)</Value>
+    </BuildMacro>
+    <BuildMacro Include="freeALUT_IncludeDir">
+      <Value>$(freeALUT_IncludeDir)</Value>
+    </BuildMacro>
+    <BuildMacro Include="freeALUT_LibDir">
+      <Value>$(freeALUT_LibDir)</Value>
+    </BuildMacro>
+    <BuildMacro Include="freeGLUT_IncludeDir">
+      <Value>$(freeGLUT_IncludeDir)</Value>
+    </BuildMacro>
+    <BuildMacro Include="freeGLUT_LibDir">
+      <Value>$(freeGLUT_LibDir)</Value>
+    </BuildMacro>
+    <BuildMacro Include="eigen_IncludeDir">
+      <Value>$(eigen_IncludeDir)</Value>
+    </BuildMacro>
+  </ItemGroup>
+</Project>
