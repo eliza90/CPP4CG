@@ -21,7 +21,7 @@ bool WorldLogic::advance(::controller::Logic& l, ::controller::InputEventHandler
 		_shallRestartTheGame = false;
 	}
 
-	//jede Sekunde eine Box hinzufügen
+	//jede 3 Sekunden eine Box hinzufügen
 	static double timeframe = 3;
 	if (_timeframe_count == 0){
 		clock_begin = std::chrono::steady_clock::now();
@@ -52,7 +52,6 @@ bool WorldLogic::advance(::controller::Logic& l, ::controller::InputEventHandler
 	std::vector<std::shared_ptr<::model::GameObject>> myObjects(l.game_model()->objects());
 
 	std::shared_ptr<::flappy_box::model::Paddle> _mypaddle;
-	std::shared_ptr<::flappy_box::model::Box> _mybox;
 	
 	for (auto o : myObjects){
 		std::vector<std::shared_ptr<::model::GameObject>>::iterator paddle = std::find_if(myObjects.begin(), myObjects.end(), [](std::shared_ptr<::model::GameObject> o)->bool{return o->name() == "Paddle"; });
@@ -63,46 +62,50 @@ bool WorldLogic::advance(::controller::Logic& l, ::controller::InputEventHandler
 		}
 		else {
 			//std::cout << "myObjects does not contain: Paddle " << '\n';// doesn't exist
-		}
-
-		//Interaktionslogik
-		if (_mypaddle != nullptr && _mybox != nullptr){
-			setForce(_mybox, _mypaddle);
-			if (_mybox->position()[2] <= _mypaddle->position()[2]){
-				/*std::cout << "box" << _mybox->position()[2] << '\n';
-				std::cout << _mypaddle->position()[2] << '\n';*/
-				_mybox->setAlive(false);
-				int lives = _model->_getRemainingLives() - 1;
-				_model->setRemainingLives(lives);
-			}
-		}
-
+		}		
+				
 		std::vector<std::shared_ptr<::model::GameObject>>::iterator box = std::find_if(myObjects.begin(), myObjects.end(), [](std::shared_ptr<::model::GameObject> o)->bool{return o->name() == "Box"; });
-		if (box != myObjects.end()) {
-			// found it
-			_mybox = std::dynamic_pointer_cast<::flappy_box::model::Box>(*box);
+		
+		if (box != myObjects.end()) {	
+			std::shared_ptr<::flappy_box::model::Box> _mybox = std::dynamic_pointer_cast<::flappy_box::model::Box>(*box);
+
+			//Interaktionslogik
+			if (_mypaddle != nullptr && _mybox != nullptr){
+				setForce(_mybox, _mypaddle);
+				if (_mybox->position()[2] <= _mypaddle->position()[2]){
+					_mybox->setAlive(false);
+					int lives = _model->_getRemainingLives() - 1;
+					_model->setRemainingLives(lives);
+				}
+			}
+
 			//Kollisionstests
 			for (auto o : myObjects){
-				std::shared_ptr<::flappy_box::model::Box> _secondbox;
 				std::vector<std::shared_ptr<::model::GameObject>>::iterator secondbox = std::find_if(box, myObjects.end(), [](std::shared_ptr<::model::GameObject> o)->bool{return o->name() == "Box"; });
-				_secondbox = std::dynamic_pointer_cast<::flappy_box::model::Box>(*secondbox);
-				
-				while (secondbox != myObjects.end()){
+				std::shared_ptr<::flappy_box::model::Box> _secondbox = std::dynamic_pointer_cast<::flappy_box::model::Box>(*box);
 
+				while (secondbox != myObjects.end()){
+			    _secondbox = std::dynamic_pointer_cast<::flappy_box::model::Box>(*secondbox);
+				++secondbox;
+				secondbox = std::find_if(secondbox, myObjects.end(), [](std::shared_ptr<::model::GameObject> o)->bool{return o->name() == "Box"; });		
+				
 				if (!_mybox->equals(*_secondbox)){//in Box definiert - gleiches Objekt -> gleiche Position
-					if (_mybox->isAlive() && _secondbox->isAlive()){
-						//kollision über umhüllende Kugeln							
-						double positionZ = _mybox->position()[2] - _secondbox->position()[2];
-						double positionX = _mybox->position()[0] - _secondbox->position()[0];
-						//(pos1-pos2)^2 < (r1+r2)^2
-						if (positionX < (_mybox->getSize() + _secondbox->getSize())*(_mybox->getSize() + _secondbox->getSize()) && positionZ < (_mybox->getSize() + _secondbox->getSize())*(_mybox->getSize() + _secondbox->getSize())){
+					if (_mybox->isAlive() && _secondbox->isAlive()){						
+						//kollision über umhüllende Kugeln	
+						//strecke MP1MP2 Vgl r1 + r2
+						//C^2 = deltaX^2 + deltaZ^2
+						double deltaZ = (_mybox->position()[2] - _secondbox->position()[2])* (_mybox->position()[2] - _secondbox->position()[2]);
+						double deltaX = (_mybox->position()[0] - _secondbox->position()[0])* (_mybox->position()[0] - _secondbox->position()[0]);
+						//std::cout << "r1+r2 " << (_mybox->getSize()*0.5 + _secondbox->getSize()*0.5) << '\n';
+						//std::cout << "D" << (sqrt(deltaX + deltaZ)) << '\n';
+						if ((_mybox->getSize()*0.5 + _secondbox->getSize()*0.5) >= (sqrt(deltaX+deltaZ))){
 							std::cout << "collision" << '\n';
+							_mybox->setAlive(false);
+							_secondbox->setAlive(false);
 						}
 					}
 				}
-				++secondbox;//iterator inkrementieren - begin ändern
-				secondbox = std::find_if(secondbox, myObjects.end(), [](std::shared_ptr<::model::GameObject> o)->bool{return o->name() == "Box"; });
-				}
+			  }
 			}
 		}
 		else{
@@ -120,20 +123,22 @@ void WorldLogic::addBoxToGame(::controller::Logic& l){
 	std::normal_distribution<double> dist1(-_model->getWorldHalfWidth(), _model->getWorldHalfWidth());
 	double x = dist1(engine); 
 	//std::cout << x << '\n';
-	std::normal_distribution<double> dist2(1.0, _model->getWorldHalfWidth() / 14);
+	std::normal_distribution<double> dist2(1.0, _model->getWorldHalfWidth() / 13);
 	double size = abs(dist2(engine));	
+	if (size < 1) size = 1;
 	//std::cout << size  << '\n'; 
 	
 	std::shared_ptr< flappy_box::model::Box > b = std::make_shared< flappy_box::model::Box >("Box");
 	b->setPosition(vec3_type(x, 0, _model->getWorldHalfHeight() / 2));
 	b->setSize(size);
-	b->setMaxPosition(vec3_type(_model->getWorldHalfWidth() - size* 0.5, 0, _model->getWorldHalfHeight()));	
+	b->setMaxPosition(vec3_type(_model->getWorldHalfWidth() - size * 0.5, 0, _model->getWorldHalfHeight() - size*0.5));
 	l.game_model()->addGameObject(b);
 }
 
 void WorldLogic::setForce(std::shared_ptr< flappy_box::model::Box > & box, std::shared_ptr< flappy_box::model::Paddle > & paddle){
+	box->setExternalForce(vec3_type(0, 0, 0)); 
 	//Fall1 - Box oberhalb des Paddles
-	if ((box->position()[0] > (paddle->position()[0] - paddle->getSize()[0] * (-0.5))) && (box->position()[0] < (paddle->position()[0] + paddle->getSize()[0] * (0.5)))){
+	if ((box->position()[0] > (paddle->position()[0] - paddle->getSize()[0] * 0.5)) && (box->position()[0] < (paddle->position()[0] + paddle->getSize()[0] *0.5))){
 		//skalierungsterm
 		double s = 10* box->getSize() * box->getSize();
 		box->setExternalForce(vec3_type(0,0,s));
@@ -142,23 +147,33 @@ void WorldLogic::setForce(std::shared_ptr< flappy_box::model::Box > & box, std::
 	else{
 		//linke Paddle Ecke
 		if (box->position()[0] < paddle->position()[0]){//linke Ecke
-			vec3_type pe = vec3_type(paddle->position()[0] - (paddle->getSize()[0] * 0.5),
+			vec3_type p = vec3_type(paddle->position()[0] - (paddle->getSize()[0] * 0.5),
 									 paddle->position()[1], 
 									 paddle->position()[2] + (paddle->getSize()[2] * 0.5));
 			//vektor Kiste - Ecke 
-			vec3_type f = pe - box->position();
+			vec3_type v_pb = box->position() - p;
 			//normalisieren
-			f = f / (sqrt(f[0] * f[0] + f[1] * f[1] + f[2] * f[2]));
+			v_pb = v_pb / (sqrt(v_pb[0] * v_pb[0] + v_pb[1] * v_pb[1] + v_pb[2] * v_pb[2]));
 			//skalar f paddle normale (0,0,-1)
-			double scalar = -f[2];
+			double fn = v_pb[2];			
 			double s = 10 * box->getSize() * box->getSize();
-			//box->setExternalForce(vec3_type(0, 0, s));
+			v_pb = v_pb*s*fn;			
+			box->setExternalForce(0.7*v_pb);
 
 		}
 		else{//rechte Ecke
 			vec3_type pe = vec3_type(paddle->position()[0] + (paddle->getSize()[0] * 0.5),
 									 paddle->position()[1],
 									 paddle->position()[2] + (paddle->getSize()[2] * (0.5)));
+			//vektor Kiste - Ecke 
+			vec3_type v_pb = box->position() - pe;
+			//normalisieren
+			v_pb = v_pb / (sqrt(v_pb[0] * v_pb[0] + v_pb[1] * v_pb[1] + v_pb[2] * v_pb[2]));
+			//skalar f paddle normale (0,0,-1)
+			double fn = v_pb[2];
+			double s = 10 * box->getSize() * box->getSize();
+			v_pb = v_pb*s*fn;
+			box->setExternalForce(0.7*v_pb);
 		}		
 	}
 }
@@ -176,7 +191,7 @@ void WorldLogic::restartGame(::controller::Logic& l){
 	std::shared_ptr< flappy_box::model::Paddle > user_paddle = std::make_shared< flappy_box::model::Paddle >("Paddle");
 	user_paddle->size(vec3_type(10.0, 1.0, 2.5));
 	user_paddle->setPosition(vec3_type(0.0, 0.0, -_model->getWorldHalfHeight() + user_paddle->getSize()[2] * 2.0));
-	user_paddle->setMaxPosition(vec3_type(_model->getWorldHalfWidth() - user_paddle->getSize()[0] * 0.5, 0.0, _model->getWorldHalfHeight()));
+	user_paddle->setMaxPosition(vec3_type(_model->getWorldHalfWidth() + user_paddle->getSize()[0] * 0.5, 0.0, _model->getWorldHalfHeight()));
 	// add paddle object
 	l.game_model()->addGameObject(user_paddle);
 	// unset restart flag

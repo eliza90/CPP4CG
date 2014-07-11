@@ -32,7 +32,7 @@ bool PaddleLogic::advance(::controller::Logic& l, ::controller::InputEventHandle
 	//Bewegungsberechnung
 	vec3_type p_alt = _model->position();
 	vec3_type v_alt = _model->velocity()*0.8;
-	vec3_type a_neu = vec3_type(_model->getPlayerControl() * 1000, 0, 0);
+	vec3_type a_neu = vec3_type(_model->getPlayerControl() * 500, 0, 0);
 	//dv = a_neu*dt
 	vec3_type dv = a_neu * timestep_sec;
 	//v_neu = v_alt + dv
