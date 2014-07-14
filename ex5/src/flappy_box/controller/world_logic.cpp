@@ -189,8 +189,8 @@ void WorldLogic::restartGame(::controller::Logic& l){
 	_model->setRemainingLives(5);
 	// create and configure new paddle object
 	std::shared_ptr< flappy_box::model::Paddle > user_paddle = std::make_shared< flappy_box::model::Paddle >("Paddle");
-	user_paddle->size(vec3_type(10.0, 1.0, 2.5));
-	user_paddle->setPosition(vec3_type(0.0, 0.0, -_model->getWorldHalfHeight() + user_paddle->getSize()[2] * 2.0));
+	user_paddle->size(vec3_type(10.0, 2.0, 2.0));
+	user_paddle->setPosition(vec3_type(0.0, 0.0, -_model->getWorldHalfHeight())); //+ user_paddle->getSize()[2] * 2.0));
 	user_paddle->setMaxPosition(vec3_type(_model->getWorldHalfWidth() + user_paddle->getSize()[0] * 0.5, 0.0, _model->getWorldHalfHeight()));
 	// add paddle object
 	l.game_model()->addGameObject(user_paddle);

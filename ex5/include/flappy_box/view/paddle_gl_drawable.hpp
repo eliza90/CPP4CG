@@ -26,11 +26,19 @@ namespace flappy_box
 		unsigned int r0;
 		unsigned int r1;
 
-		GLuint vbo_vertices;
-		GLfloat* vertices = new GLfloat[600];
+		static const int ring_seg1 = 40;
+		static const int ring_seg2 = 15;
 
-		GLuint vbo_normals;
-		GLfloat* normals = new GLfloat[600];
+		GLuint ring_vbuf[3];
+		GLfloat vbo_vertices[ring_seg1*ring_seg2];
+		GLfloat vbo_normals[ring_seg1*ring_seg2];
+		unsigned int vbo_indices[ring_seg1*ring_seg2*3*2];
+
+		static const int rotors = 9;
+		GLuint rotor_vbuf[3];
+		GLfloat rotor_vertices[rotors*3];
+		GLfloat rotor_normals[rotors*3];
+		unsigned int rotor_indices[rotors*3];
     }; // PaddleGlDrawable
   }
 }
