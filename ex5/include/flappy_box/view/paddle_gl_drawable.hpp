@@ -2,6 +2,7 @@
 
 # include "view/gl_renderer.hpp"
 
+
 # include "flappy_box/model/paddle.hpp"
 
 #include <GL/glew.h>
