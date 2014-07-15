@@ -8,12 +8,12 @@ namespace flappy_box
 {
   namespace view
   {
-	  class WorldGlDrawable : public ::view::GlRenderer::Drawable
+	  class GameOverGlDrawable : public ::view::GlRenderer::Drawable
     {
       public:
 
-		  WorldGlDrawable(const std::shared_ptr< model::World>&);
-		virtual ~WorldGlDrawable();
+		  GameOverGlDrawable(const std::shared_ptr< model::World>&);
+		  virtual ~GameOverGlDrawable();
         virtual void visualize( ::view::GlRenderer&, ::view::GlutWindow& ) override;
 		
       private:

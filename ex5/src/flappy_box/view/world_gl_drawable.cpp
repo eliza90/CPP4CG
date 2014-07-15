@@ -10,7 +10,10 @@ using namespace ::flappy_box::view;
 WorldGlDrawable::WorldGlDrawable(const std::shared_ptr< ::flappy_box::model::World >& b)
 : _model( b )
 {
-  
+	
+	
+	
+
 }
 
 WorldGlDrawable::~WorldGlDrawable()
@@ -21,6 +24,8 @@ WorldGlDrawable::~WorldGlDrawable()
 
 void WorldGlDrawable::visualize(::view::GlRenderer& r, ::view::GlutWindow& w)
 {
+	
+
 
 	// TODO: Replace old rendering code with new and improved rendering - Aufgabe 5.3
 
@@ -36,22 +41,22 @@ void WorldGlDrawable::visualize(::view::GlRenderer& r, ::view::GlutWindow& w)
 
 
 	// Beleuchtung
-	glEnable(GL_LIGHTING);
+	/*glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
 	glEnable(GL_COLOR_MATERIAL);
-	glEnable(GL_NORMALIZE);
+	glEnable(GL_NORMALIZE);*/
 
-	GLfloat light_pos[] = { 1.0, 1.0, 1.0, 1.0 };
-	float light_color[] = { 1.0, 1.0, 1.0, 1.0 };
+	//GLfloat light_pos[] = { 1.0, 1.0, 1.0, 1.0 };
+	//float light_color[] = { 1.0, 1.0, 1.0, 1.0 };
 
-	glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
-	glLightfv(GL_LIGHT0, GL_POSITION, light_pos);
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, light_color);
+	//glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
+	//glLightfv(GL_LIGHT0, GL_POSITION, light_pos);
+	//glLightfv(GL_LIGHT0, GL_DIFFUSE, light_color);
 
-	glDisable(GL_LIGHTING);
-	glDisable(GL_LIGHT0);
-	glDisable(GL_COLOR_MATERIAL);
-	glDisable(GL_NORMALIZE);
+	//glDisable(GL_LIGHTING);
+	//glDisable(GL_LIGHT0);
+	//glDisable(GL_COLOR_MATERIAL);
+	//glDisable(GL_NORMALIZE);
 
 	
 	//Textausgabe

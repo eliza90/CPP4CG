@@ -104,6 +104,7 @@
     <ClInclude Include="..\..\include\flappy_box\model\world.hpp" />
     <ClInclude Include="..\..\include\flappy_box\view\box_al_audible.hpp" />
     <ClInclude Include="..\..\include\flappy_box\view\box_gl_drawable.hpp" />
+    <ClInclude Include="..\..\include\flappy_box\view\game_over_gl_drawable.hpp" />
     <ClInclude Include="..\..\include\flappy_box\view\paddle_gl_drawable.hpp" />
     <ClInclude Include="..\..\include\flappy_box\view\world_gl_drawable.hpp" />
     <ClInclude Include="..\..\include\math.hpp" />
@@ -129,6 +130,7 @@
     <ClCompile Include="..\..\src\flappy_box\model\world.cpp" />
     <ClCompile Include="..\..\src\flappy_box\view\box_al_audible.cpp" />
     <ClCompile Include="..\..\src\flappy_box\view\box_gl_drawable.cpp" />
+    <ClCompile Include="..\..\src\flappy_box\view\game_over_gl_drawable.cpp" />
     <ClCompile Include="..\..\src\flappy_box\view\paddle_gl_drawable.cpp" />
     <ClCompile Include="..\..\src\flappy_box\view\world_gl_drawable.cpp" />
     <ClCompile Include="..\..\src\main.cpp" />

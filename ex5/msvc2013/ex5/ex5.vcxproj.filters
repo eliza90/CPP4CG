@@ -132,6 +132,9 @@
     <ClInclude Include="..\..\include\flappy_box\controller\game_over_logic.hpp">
       <Filter>Header Files\flappy_box\controller</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\flappy_box\view\game_over_gl_drawable.hpp">
+      <Filter>Header Files\flappy_box\view</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\main.cpp">
@@ -202,6 +205,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\flappy_box\controller\game_over_logic.cpp">
       <Filter>Source Files\flappy_box\controller</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\flappy_box\view\game_over_gl_drawable.cpp">
+      <Filter>Source Files\flappy_box\view</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
