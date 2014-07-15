@@ -154,7 +154,8 @@ void BoxGlDrawable::visualize( ::view::GlRenderer& r, ::view::GlutWindow& w ){
 	glNormalPointer(GL_FLOAT, 0, normals);
 	glVertexPointer(3, GL_FLOAT, 0, vertices);
 
-
+	glPushMatrix();
+	{
 	double angle = _model->angle();
 	const vec3_type& pos = _model->position();
 	const double size = _model->getSize();
@@ -164,50 +165,33 @@ void BoxGlDrawable::visualize( ::view::GlRenderer& r, ::view::GlutWindow& w ){
 	glScaled(size, size, size);
 
 	//Boxen
+	//glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	////size,type,stride,_pointer
+	/*glEnable(GL_TEXTURE_2D);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glTexCoordPointer(3, GL_FLOAT, 3, 0);
+	glBindTexture(GL_TEXTURE_2D, boxTexture);*/
+
 	glColor3f(1.5, 0.5, 0.5);
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, boxTexture);
 	glDrawArrays(GL_QUADS, 0, 24);
+	/*glDisableClientState(GL_TEXTURE_COORD_ARRAY);*/
+	glDisable(GL_TEXTURE_2D);
 
 	//Wireframe
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glLineWidth(1.0f);
-	glColor3f(0.5, 0., 0.);
+	glColor3f(0.5, 0.5, 0.5);
 	glDrawArrays(GL_QUADS, 0, 24);
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	}
+	glPopMatrix();
 
 	//backface culling	
-	//glFrontFace(GL_CCW);//Polygone deren Punkte entgegen dem Uhrzeigersinn definiert wurden, werden als Vorderseite erkannt
-	//glCullFace(GL_BACK);
+	glFrontFace(GL_CCW);//Polygone deren Punkte entgegen dem Uhrzeigersinn definiert wurden, werden als Vorderseite erkannt
+	glCullFace(GL_BACK);
 
-	// Beleuchtung
-	glEnable(GL_LIGHTING);
-	glEnable(GL_LIGHT0);
-	glEnable(GL_COLOR_MATERIAL);
-	glEnable(GL_NORMALIZE);
-
-
-	//GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
-	//GLfloat mat_ambient[] = { 0.4, 0.4, 0.4, 1.0 };
-	//GLfloat mat_diffuse[] = { 0.4, 0.8, 0.4, 1.0 };
-	//glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
-	//glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
-	//glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
-
-	//GLfloat lightKa[] = { 1.0f, 1.0f, 1.0f };
-	//GLfloat lightKd[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-	//GLfloat lightPos[] = { 0, 0, 0, 0 };
-	//glLightfv(GL_LIGHT0, GL_AMBIENT, lightKa);
-	//glLightfv(GL_LIGHT0, GL_DIFFUSE, lightKd);
-	//glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
-
-
-	GLfloat light_pos[] = { 1.0, 1.0, 1.0, 1.0 };
-	float light_color[] = { 1.0, 1.0, 1.0, 1.0 };
-
-	glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
-	glLightfv(GL_LIGHT0, GL_POSITION, light_pos);
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, light_color);
-
-	
 
 	
   //glPushMatrix();

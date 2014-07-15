@@ -15,7 +15,7 @@ namespace flappy_box
 		  WorldGlDrawable(const std::shared_ptr< model::World>&);
 		virtual ~WorldGlDrawable();
         virtual void visualize( ::view::GlRenderer&, ::view::GlutWindow& ) override;
-
+		
       private:
         std::shared_ptr< model::World const > _model;
 
