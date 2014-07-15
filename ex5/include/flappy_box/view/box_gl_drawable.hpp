@@ -21,7 +21,9 @@ namespace flappy_box
 		  std::shared_ptr< model::Box const > _model;
 		  GLuint boxTexture;
 		  //unsigned char textureCoord[3][128][128];
-		  unsigned char textureCoord[49152];
+		  unsigned char* textureCoord;
+		  int width, height;
+		  FILE * pFile;
 	}; // BoxGlDrawable
   }
 }
