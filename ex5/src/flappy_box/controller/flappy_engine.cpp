@@ -12,6 +12,10 @@
 # include "flappy_box/view/box_gl_drawable.hpp"
 # include "flappy_box/view/box_al_audible.hpp"
 
+# include "flappy_box/model/game_over.hpp"
+# include "flappy_box/controller/game_over_logic.hpp"
+# include "flappy_box/view/game_over_gl_drawable.hpp"
+
 # include "view/glut_window.hpp"
 
 
@@ -47,6 +51,8 @@ void FlappyEngine::init( int& argc, char** argv )
   game_logic()->logic_factory().register_module< flappy_box::model::World >([](std::shared_ptr< flappy_box::model::World > const& w) { return std::make_shared< WorldLogic >(w); });
   gl_renderer()->drawable_factory().register_module< flappy_box::model::World >([](std::shared_ptr< flappy_box::model::World > const& b) { return std::make_shared< view::WorldGlDrawable >(b); });
 
+  game_logic()->logic_factory().register_module< flappy_box::model::GameOver >([](std::shared_ptr< flappy_box::model::GameOver > const& w) { return std::make_shared< GameOverLogic >(w); });
+  gl_renderer()->drawable_factory().register_module< flappy_box::model::GameOver >([](std::shared_ptr< flappy_box::model::GameOver > const& b) { return std::make_shared< view::GameOverGlDrawable >(b); });
   //.
   
    //create one single cube (to be deleted later...)

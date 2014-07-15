@@ -67,28 +67,33 @@ bool WorldLogic::advance(::controller::Logic& l, ::controller::InputEventHandler
 		std::vector<std::shared_ptr<::model::GameObject>>::iterator box = std::find_if(myObjects.begin(), myObjects.end(), [](std::shared_ptr<::model::GameObject> o)->bool{return o->name() == "Box"; });
 		
 		if (box != myObjects.end()) {	
-			std::shared_ptr<::flappy_box::model::Box> _mybox = std::dynamic_pointer_cast<::flappy_box::model::Box>(*box);
-
-			//Interaktionslogik
-			if (_mypaddle != nullptr && _mybox != nullptr){
-				setForce(_mybox, _mypaddle);
-				if (_mybox->position()[2] <= _mypaddle->position()[2]){
-					_mybox->setAlive(false);
-					int lives = _model->_getRemainingLives() - 1;
-					_model->setRemainingLives(lives);
-				}
-			}
-
+			std::shared_ptr<::flappy_box::model::Box> _mybox = std::dynamic_pointer_cast<::flappy_box::model::Box>(*box);						
+			
 			//Kollisionstests
 			for (auto o : myObjects){
 				std::vector<std::shared_ptr<::model::GameObject>>::iterator secondbox = std::find_if(box, myObjects.end(), [](std::shared_ptr<::model::GameObject> o)->bool{return o->name() == "Box"; });
 				std::shared_ptr<::flappy_box::model::Box> _secondbox = std::dynamic_pointer_cast<::flappy_box::model::Box>(*box);
-
+				
 				while (secondbox != myObjects.end()){
 			    _secondbox = std::dynamic_pointer_cast<::flappy_box::model::Box>(*secondbox);
 				++secondbox;
 				secondbox = std::find_if(secondbox, myObjects.end(), [](std::shared_ptr<::model::GameObject> o)->bool{return o->name() == "Box"; });		
 				
+				//Interaktionslogik
+				if (_mypaddle != nullptr && _secondbox != nullptr){
+					setForce(_mybox, _mypaddle);
+					if ((_secondbox->position()[2] + _secondbox->getSize()*0.5) <= (_mypaddle->position()[2])){
+
+						if (_secondbox->isAlive()){
+							int lives = _model->_getRemainingLives();
+							lives--;
+							std::cout << lives << '\n';
+							_model->setRemainingLives(lives);
+						}
+						_secondbox->setAlive(false);															
+					}
+				}				
+
 				if (!_mybox->equals(*_secondbox)){//in Box definiert - gleiches Objekt -> gleiche Position
 					if (_mybox->isAlive() && _secondbox->isAlive()){						
 						//kollision über umhüllende Kugeln	
@@ -126,6 +131,7 @@ void WorldLogic::addBoxToGame(::controller::Logic& l){
 	std::normal_distribution<double> dist2(1.0, _model->getWorldHalfWidth() / 13);
 	double size = abs(dist2(engine));	
 	if (size < 1) size = 1;
+	if (size > 4) size = 4;
 	//std::cout << size  << '\n'; 
 	
 	std::shared_ptr< flappy_box::model::Box > b = std::make_shared< flappy_box::model::Box >("Box");
@@ -190,7 +196,7 @@ void WorldLogic::restartGame(::controller::Logic& l){
 	// create and configure new paddle object
 	std::shared_ptr< flappy_box::model::Paddle > user_paddle = std::make_shared< flappy_box::model::Paddle >("Paddle");
 	user_paddle->size(vec3_type(10.0, 2.0, 2.0));
-	user_paddle->setPosition(vec3_type(0.0, 0.0, -_model->getWorldHalfHeight())); //+ user_paddle->getSize()[2] * 2.0));
+	user_paddle->setPosition(vec3_type(0.0, 0.0, -_model->getWorldHalfHeight() + user_paddle->getSize()[2] * 2)); //+ user_paddle->getSize()[2] * 2.0));
 	user_paddle->setMaxPosition(vec3_type(_model->getWorldHalfWidth() + user_paddle->getSize()[0] * 0.5, 0.0, _model->getWorldHalfHeight()));
 	// add paddle object
 	l.game_model()->addGameObject(user_paddle);
