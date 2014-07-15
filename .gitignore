@@ -213,3 +213,7 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+ex5/msvc2013/ex5/extlibs.props
+ex5/msvc2013/ex5/extlibs.props
+ex5/res/theheader.raw
+*.props

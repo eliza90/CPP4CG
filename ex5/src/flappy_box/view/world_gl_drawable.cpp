@@ -15,7 +15,7 @@ WorldGlDrawable::WorldGlDrawable(const std::shared_ptr< ::flappy_box::model::Wor
 	textureCoord = new unsigned char[(wwidth * wheight * 3)];
 
 	// open texture data
-	wFile = fopen("../../res/theheader.raw", "rb");
+	wFile = fopen("../../res/thehead.raw", "rb");
 	if (wFile == NULL){
 		std::cout << "No Texture found!" << std::endl;
 	}
@@ -149,7 +149,7 @@ void WorldGlDrawable::visualize(::view::GlRenderer& r, ::view::GlutWindow& w)
 	char text_p[32];
 	sprintf(text_p, "Punkte: %d", _model->getPlayerPoints());
 	glColor3f(2, 0.5, 0.5);
-	glRasterPos3f(-90, 20, 40);
+	glRasterPos3f(-30, -50, -10);
 	for (const char* c = text_p; *c != '\0'; c++)
 		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, *c);
 
@@ -157,7 +157,7 @@ void WorldGlDrawable::visualize(::view::GlRenderer& r, ::view::GlutWindow& w)
 	char text_l[32];
 	sprintf(text_l, "Leben: %d", _model->_getRemainingLives());
 	glColor3f(2, 0.5, 0.5);
-	glRasterPos3f(-90, 20, 30);
+	glRasterPos3f(-30, -50, -13);
 	for (int i = 0; text_l[i] != '\0'; i++)
 		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, text_l[i]);
 }
