@@ -150,47 +150,39 @@ void BoxGlDrawable::visualize(::view::GlRenderer& r, ::view::GlutWindow& w){
 
 	//set Pointer
 	glNormalPointer(GL_FLOAT, 0, normals);
-	glVertexPointer(3, GL_FLOAT, 0, vertices);		
+	glVertexPointer(3, GL_FLOAT, 0, vertices);
 
-		//backface culling	
-		glFrontFace(GL_CCW);//Polygone deren Punkte entgegen dem Uhrzeigersinn definiert wurden, werden als Vorderseite erkannt
-		glCullFace(GL_BACK);
-		glEnable(GL_CULL_FACE);
-
-		// Beleuchtung
-		glEnable(GL_LIGHTING);
-		glEnable(GL_LIGHT0);
-		glEnable(GL_COLOR_MATERIAL);
-		glEnable(GL_NORMALIZE);
-
-		GLfloat light_pos[] = { 1.0, 1.0, 1.0, 1.0 };
-		float light_color[] = { 1.0, 1.0, 1.0, 1.0 };
-
-		glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
-		glLightfv(GL_LIGHT0, GL_POSITION, light_pos);
-		glLightfv(GL_LIGHT0, GL_DIFFUSE, light_color);
-		
 	glPushMatrix();
-	{		
-		// Positionierung der Box
-		double angle = _model->angle();
-		const vec3_type& pos = _model->position();
-		const double size = _model->getSize();
-		glTranslated(pos[0], pos[1], pos[2]);
-		glRotated(angle, 0., 1., 0.);
-		glScaled(size, size, size);
+	{
+	double angle = _model->angle();
+	const vec3_type& pos = _model->position();
+	const double size = _model->getSize();
+
+	glTranslated(pos[0], pos[1], pos[2]);
+	glRotated(angle, 0., 1., 0.);
+	glScaled(size, size, size);
 
 	//Boxen
+	//glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	////size,type,stride,_pointer
+	/*glEnable(GL_TEXTURE_2D);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glTexCoordPointer(3, GL_FLOAT, 3, 0);
+	glBindTexture(GL_TEXTURE_2D, boxTexture);*/
+
 	glColor3f(1.5, 0.5, 0.5);
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, boxTexture);
 	glDrawArrays(GL_QUADS, 0, 24);
+	/*glDisableClientState(GL_TEXTURE_COORD_ARRAY);*/
+	glDisable(GL_TEXTURE_2D);
 
 	//Wireframe
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glLineWidth(1.0f);
-	glColor3f(0.5, 0., 0.);
+	glColor3f(0.5, 0.5, 0.5);
 	glDrawArrays(GL_QUADS, 0, 24);
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-
 	}
 	glPopMatrix();
 
@@ -246,4 +238,5 @@ void BoxGlDrawable::visualize(::view::GlRenderer& r, ::view::GlutWindow& w){
 //
 //  }
 //  glPopMatrix();
+
 }
