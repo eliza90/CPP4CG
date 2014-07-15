@@ -33,7 +33,7 @@ BoxGlDrawable::BoxGlDrawable(const std::shared_ptr< ::flappy_box::model::Box >& 
 		fread(textureCoord, width * height * 3, 1, pFile);
 		fclose(pFile);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, textureCoord);
-		}
+	}
 
 }
 

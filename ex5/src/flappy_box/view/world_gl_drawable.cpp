@@ -1,6 +1,5 @@
 # include "flappy_box/view/world_gl_drawable.hpp"
 
-#include <GL/freeglut.h>
 
 # include <algorithm>
 
@@ -10,24 +9,112 @@ using namespace ::flappy_box::view;
 WorldGlDrawable::WorldGlDrawable(const std::shared_ptr< ::flappy_box::model::World >& b)
 : _model( b )
 {
-	
-	
+	// allocate buffer
+	wwidth = 128;
+	wheight = 128;
+	textureCoord = new unsigned char[(wwidth * wheight * 3)];
+
+	// open texture data
+	wFile = fopen("../../res/theheader.raw", "rb");
+	if (wFile == NULL){
+		std::cout << "No Texture found!" << std::endl;
+	}
+	else {
+		std::cout << "Texture found!" << std::endl;
+		// read texture data
+		fread(textureCoord, wwidth * wheight * 3, 1, wFile);
+		fclose(wFile);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, wwidth, wheight, 0, GL_RGB, GL_UNSIGNED_BYTE, textureCoord);
+	}
+
+	glGenTextures(1, &worldTexture); // allocate a texture name
+	glBindTexture(GL_TEXTURE_2D, worldTexture); // select our current texture
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	
 
 }
 
 WorldGlDrawable::~WorldGlDrawable()
 {
-
+	glDeleteTextures(1, &worldTexture);
 
 }
 
 void WorldGlDrawable::visualize(::view::GlRenderer& r, ::view::GlutWindow& w)
 {
+
+	//Background-Texture
+	/*glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+	glEnable(GL_COLOR_MATERIAL);*/
+	//glEnable(GL_NORMALIZE);
+
+	glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
+
+	glPopMatrix(); {
+		//rechts
+
+		
+		glEnable(GL_TEXTURE_2D); {
+			glBindTexture(GL_TEXTURE_2D, worldTexture);
+			glColor3d(0.25, 0.25, 2.0);
+
+			glBegin(GL_QUADS);
+			glVertex3d(_model->getWorldHalfWidth(), -50, _model->getWorldHalfHeight());
+			glColor3d(1.95, 0.25,1.25);
+			glVertex3d(_model->getWorldHalfWidth(), 200, _model->getWorldHalfHeight());
+			glVertex3d(_model->getWorldHalfWidth(), 200, -_model->getWorldHalfHeight());
+			glColor3d(0.25, 0.25, 2.0);
+			glVertex3d(_model->getWorldHalfWidth(), -50, -_model->getWorldHalfHeight());
+			glEnd();
+
+			//links
+			/*glColor3d(0.95, 0.25, 0.25);*/
+
+			glBegin(GL_QUADS);
+			glVertex3d(-_model->getWorldHalfWidth(), -50, _model->getWorldHalfHeight());
+			glColor3d(1.95, 0.25, 1.25);
+			glVertex3d(-_model->getWorldHalfWidth(), 200, _model->getWorldHalfHeight());
+			glVertex3d(-_model->getWorldHalfWidth(), 200, -_model->getWorldHalfHeight());
+			glColor3d(0.25, 0.25, 2.0);
+			glVertex3d(-_model->getWorldHalfWidth(), -50, -_model->getWorldHalfHeight());
+			glEnd();
+
+			//hinten
+			//glColor3d(0.95, 0.25, 0.25);
+			glColor3d(1.95, 0.25, 1.25);
+			glBegin(GL_QUADS);
+			glVertex3d(-_model->getWorldHalfWidth(), 200, -_model->getWorldHalfHeight());
+			glVertex3d(_model->getWorldHalfWidth(), 200, -_model->getWorldHalfHeight());
+			glVertex3d(_model->getWorldHalfWidth(), 200, _model->getWorldHalfHeight());
+			glVertex3d(-_model->getWorldHalfWidth(), 200, _model->getWorldHalfHeight());
+			glEnd();
+			glColor3d(0.25, 0.25, 2.0);
+			//oben
+			//glColor3d(0.95, 0.25, 0.25);
+			glBegin(GL_QUADS);
+			glVertex3d(-_model->getWorldHalfWidth(), -50, _model->getWorldHalfHeight());
+			glVertex3d(_model->getWorldHalfWidth(), -50, _model->getWorldHalfHeight());
+			glColor3d(1.95, 0.25, 1.25);
+			glVertex3d(_model->getWorldHalfWidth(), 200, _model->getWorldHalfHeight());
+			glVertex3d(-_model->getWorldHalfWidth(), 200, _model->getWorldHalfHeight());
+			glEnd();
+
+			//unten
+			glColor3d(1.95, 0.25, 1.25);
+			glBegin(GL_QUADS);
+			glVertex3d(-_model->getWorldHalfWidth(), 200, -_model->getWorldHalfHeight());
+			glVertex3d(_model->getWorldHalfWidth(), 200, -_model->getWorldHalfHeight());
+			glColor3d(0.25, 0.25, 2.0);
+			glVertex3d(_model->getWorldHalfWidth(), -50, -_model->getWorldHalfHeight());
+			glVertex3d(-_model->getWorldHalfWidth(), -50, -_model->getWorldHalfHeight());
+			glEnd();
+		}glDisable(GL_TEXTURE_2D);
+	}glPushMatrix();
 	
-
-
-	// TODO: Replace old rendering code with new and improved rendering - Aufgabe 5.3
 
 	//Tiefeneindruck/ Nebel
 	glEnable(GL_FOG);
@@ -40,19 +127,17 @@ void WorldGlDrawable::visualize(::view::GlRenderer& r, ::view::GlutWindow& w)
 	glFogf(GL_FOG_END, 500.f);
 
 
-	// Beleuchtung
-	/*glEnable(GL_LIGHTING);
-	glEnable(GL_LIGHT0);
-	glEnable(GL_COLOR_MATERIAL);
-	glEnable(GL_NORMALIZE);*/
 
+	//// Beleuchtung
+	//glEnable(GL_LIGHTING);
+	//glEnable(GL_LIGHT0);
+	//glEnable(GL_COLOR_MATERIAL);
+	//glEnable(GL_NORMALIZE);
 	//GLfloat light_pos[] = { 1.0, 1.0, 1.0, 1.0 };
 	//float light_color[] = { 1.0, 1.0, 1.0, 1.0 };
-
 	//glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
 	//glLightfv(GL_LIGHT0, GL_POSITION, light_pos);
 	//glLightfv(GL_LIGHT0, GL_DIFFUSE, light_color);
-
 	//glDisable(GL_LIGHTING);
 	//glDisable(GL_LIGHT0);
 	//glDisable(GL_COLOR_MATERIAL);
