@@ -61,6 +61,7 @@ bool BoxObjectLogic::advance( ::controller::Logic& l, ::controller::InputEventHa
 	  v_neu[2] = -v_neu[2];
 	  //a_alt[2] = -a_alt[2];
   }
+   p_neu[1] = 0;
   
   //neue Werte setzen
   _model->setVelocity(v_neu);

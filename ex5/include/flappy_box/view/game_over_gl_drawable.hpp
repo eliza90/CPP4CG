@@ -2,7 +2,7 @@
 
 # include "view/gl_renderer.hpp"
 
-# include "flappy_box/model/world.hpp"
+# include "flappy_box/model/game_over.hpp"
 
 namespace flappy_box
 {
@@ -12,12 +12,12 @@ namespace flappy_box
     {
       public:
 
-		  GameOverGlDrawable(const std::shared_ptr< model::World>&);
+		  GameOverGlDrawable(const std::shared_ptr< model::GameOver>&);
 		  virtual ~GameOverGlDrawable();
         virtual void visualize( ::view::GlRenderer&, ::view::GlutWindow& ) override;
 		
       private:
-        std::shared_ptr< model::World const > _model;
+        std::shared_ptr< model::GameOver const > _model;
 
     }; // BoxGlDrawable
   }
