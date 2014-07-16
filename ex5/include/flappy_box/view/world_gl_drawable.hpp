@@ -19,6 +19,12 @@ namespace flappy_box
       private:
         std::shared_ptr< model::World const > _model;
 
+		//GLuint worldTexture;
+		//unsigned char textureCoord[3][128][128];
+		unsigned char* textureCoord;
+		int wwidth, wheight;
+		FILE * wFile;
+
     }; // BoxGlDrawable
   }
 }

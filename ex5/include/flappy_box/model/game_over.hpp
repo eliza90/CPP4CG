@@ -16,6 +16,10 @@ namespace flappy_box
 
 			const int& getPlayerPoints() const { return _playerPoints; }
 
+			double getWorldHalfHeight() const { return 30.0; } /* gibt die halbe Ausdehnung der Spielwelt in z-Richtung zurück */
+			double getWorldHalfWidth() const { return 42.0; } /* gibt die halbe Ausdehnung der Spielwelt in x-Richtung zurück */
+
+
 		private:
 
 			const int _playerPoints;
