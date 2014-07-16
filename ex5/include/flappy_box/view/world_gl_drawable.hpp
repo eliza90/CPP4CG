@@ -1,7 +1,4 @@
 # pragma once
-# include <GL/glew.h>
-# include <GL/freeglut.h>
-
 
 # include "view/gl_renderer.hpp"
 
@@ -21,13 +18,7 @@ namespace flappy_box
 		
       private:
         std::shared_ptr< model::World const > _model;
-		GLuint VBO;
-		GLuint worldTexture;
-		//unsigned char textureCoord[3][128][128];
-		unsigned char* textureCoord;
-		int wwidth, wheight;
-		FILE * wFile;
 
-    }; //WorldGlDrawable
+    }; // BoxGlDrawable
   }
 }

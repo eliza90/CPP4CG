@@ -144,10 +144,9 @@ void WorldLogic::addBoxToGame(::controller::Logic& l){
 void WorldLogic::setForce(std::shared_ptr< flappy_box::model::Box > & box, std::shared_ptr< flappy_box::model::Paddle > & paddle){
 	box->setExternalForce(vec3_type(0, 0, 0)); 
 	//Fall1 - Box oberhalb des Paddles
-	if ((box->position()[0] > (paddle->position()[0] - paddle->getSize()[0] * 0.5)) && (box->position()[0] < (paddle->position()[0] + paddle->getSize()[0] *0.5))){
+	if ((box->position()[0] > -0.5*paddle->getSize()[0]) && ((box->position()[0] < +0.5*paddle->getSize()[0]))){
 		//skalierungsterm
-		double s = 10* box->getSize() * box->getSize();
-		box->setExternalForce(vec3_type(0,0,s));
+		box->setExternalForce(vec3_type(0, 0, 1)*(10 * box->getSize() * box->getSize()));
 	}
 	//Fall2 -Box  oberhalb des Paddles, nicht mehr über der Fläche - links bzw. rechts davon
 	else{
@@ -155,7 +154,7 @@ void WorldLogic::setForce(std::shared_ptr< flappy_box::model::Box > & box, std::
 		if (box->position()[0] < paddle->position()[0]){//linke Ecke
 			vec3_type p = vec3_type(paddle->position()[0] - (paddle->getSize()[0] * 0.5),
 									 paddle->position()[1], 
-									 paddle->position()[2] + (paddle->getSize()[2] * 0.5));
+									 paddle->position()[2] + (paddle->getSize()[1] * 0.5));
 			//vektor Kiste - Ecke 
 			vec3_type v_pb = box->position() - p;
 			//normalisieren
@@ -170,7 +169,7 @@ void WorldLogic::setForce(std::shared_ptr< flappy_box::model::Box > & box, std::
 		else{//rechte Ecke
 			vec3_type pe = vec3_type(paddle->position()[0] + (paddle->getSize()[0] * 0.5),
 									 paddle->position()[1],
-									 paddle->position()[2] + (paddle->getSize()[2] * (0.5)));
+									 paddle->position()[2] + (paddle->getSize()[1] * (0.5)));
 			//vektor Kiste - Ecke 
 			vec3_type v_pb = box->position() - pe;
 			//normalisieren

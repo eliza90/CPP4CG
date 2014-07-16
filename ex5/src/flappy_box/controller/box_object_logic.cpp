@@ -23,6 +23,30 @@ bool BoxObjectLogic::advance( ::controller::Logic& l, ::controller::InputEventHa
   vec3_type f_ext = _model->externalForce();
   vec3_type a_grav(0, 0, -1.5);  
 
+  //überprüfen der position
+  //Fall x
+  if (abs(p_alt[0]) >= _model->maxPosition()[0]){
+	  if (p_alt[0] <= -_model->maxPosition()[0])  {
+		  p_alt[0] = -_model->maxPosition()[0];
+	  }
+	  else{
+		  p_alt[0] = _model->maxPosition()[0];
+	  }
+	  v_alt[0] = -v_alt[0];
+	  //a_alt[0] = -a_alt[0] * 5;
+  }
+  //Fall z
+  if (abs(p_alt[2]) >= _model->maxPosition()[2]){
+	  if (p_alt[2] <= -_model->maxPosition()[2])  {
+		  p_alt[2] = -_model->maxPosition()[2];
+	  }
+	  else{
+		  p_alt[2] = _model->maxPosition()[2];
+	  }
+	  v_alt[2] = -v_alt[2];
+	  //a_alt[2] = -a_alt[2];
+  }
+
   double d(0.8);//dämpfung
   //masse des Würfels = Volumen der Box (Kantenlänge^3)
   //a_ext = f_ext/m  

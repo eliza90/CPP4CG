@@ -36,8 +36,8 @@ namespace flappy_box
 
 		static const int rotors = 9;
 		GLuint rotor_vbuf[3];
-		GLfloat rotor_vertices[rotors*6+3];
-		GLfloat rotor_normals[rotors*6+3];
+		GLfloat rotor_vertices[57];
+		GLfloat rotor_normals[rotors*6];
 		unsigned int rotor_indices[rotors*6*2];
     }; // PaddleGlDrawable
   }

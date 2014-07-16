@@ -81,22 +81,18 @@ void PaddleGlDrawable::updateVBOs(){
 	//			vbo_indices[n+5] = static_cast<int>(j + 1);                 //    0  + 1       -> 1
 	//		}
 	//		else{
-				//vbo_indices[n] = static_cast<int>(j + k*ring_seg2); // zB 0 + 0*40           ->   0
-				//vbo_indices[n+1] = static_cast<int>(j + k*ring_seg2 + ring_seg2); //0+15   ->   15
-				//vbo_indices[n+2] = static_cast<int>(j + k*ring_seg2 + 1);//    0 + 1       ->   1
+	//			vbo_indices[n] = static_cast<int>(j + k*ring_seg2); // zB 0 + 0*40           ->   0
+	//			vbo_indices[n+1] = static_cast<int>(j + k*ring_seg2 + ring_seg2); //0+15   ->   15
+	//			vbo_indices[n+2] = static_cast<int>(j + k*ring_seg2 + 1);//    0 + 1       ->   1
 
-				//vbo_indices[n+3] = static_cast<int>(j + k*ring_seg2 + 1); // zB 0 + 0*40 +1 -> 1
-				//vbo_indices[n+4] = static_cast<int>(j + k*ring_seg2 + ring_seg2); //0+15    -> 15
-				//vbo_indices[n+5] = static_cast<int>(j + k*ring_seg2 + ring_seg2 + 1);//    14 + 1       -> 15
+	//			vbo_indices[n+3] = static_cast<int>(j + k*ring_seg2 + 1); // zB 0 + 0*40 +1 -> 1
+	//			vbo_indices[n+4] = static_cast<int>(j + k*ring_seg2 + ring_seg2); //0+15    -> 15
+	//			vbo_indices[n+5] = static_cast<int>(j + k*ring_seg2 + ring_seg2 + 1);//    14 + 1       -> 15
 	//		}
 	//	}
 	//}
 	//std::cout << n << '\n';//=3599 für indices korrekt
-		
-	for (int i = 1; i < 4; i++){
-		rotor_vertices[(sizeof(rotor_vertices)-i)] = 0;
-	}
-
+			
 	//Rotors
 	for (int i = 0; i < rotors; i++){
 		double alpha1 = static_cast<double>((i - 0.3)) / static_cast<double>(rotors);
@@ -113,33 +109,31 @@ void PaddleGlDrawable::updateVBOs(){
 				 rotor_vertices[n+4] = (r0 - r1)*sin(alpha2);//y n++;
 				 rotor_vertices[n+5] = r1*(-1);//z			 
 				
-		////Normals
+			////Normals
+			n = i * 3;
 				 vec3_type v0 = vec3_type(0, 0, 0);
-				 vec3_type v1 = vec3_type((r0 - r1)*cos(alpha1), 
-				 							 (r0 - r1)*sin(alpha1),
-				 							 r1);
-				 vec3_type v2 = vec3_type((r0 - r1)*cos(alpha2),
-				 							(r0 - r1)*sin(alpha1),
-				 							r1);
+				 vec3_type v1 = vec3_type(rotor_vertices[n], rotor_vertices[n + 1], rotor_vertices[n + 2]);
+				 vec3_type v2 = vec3_type(rotor_vertices[n +3], rotor_vertices[n + 4], rotor_vertices[n + 5]);
 
 				 vec3_type a = v2 - v0;
 				 vec3_type b = v1 - v0;
-
-				 n = i * 6;
+				 				 
 				 	rotor_normals[n] =   abs(a[1] * b[2] - a[2] * b[1]);
 				 	rotor_normals[n+1] = abs(a[2] * b[0] - a[0] * b[2]);
 				 	rotor_normals[n+2] = abs(a[0] * b[1] - a[1] * b[0]);
-
-					rotor_normals[n+3] = abs(a[1] * b[2] - a[2] * b[1]);
-					rotor_normals[n+4] = abs(a[2] * b[0] - a[0] * b[2]);
-					rotor_normals[n+5] = abs(a[0] * b[1] - a[1] * b[0]);
-
-				 
-					 n = i * 3;
-					 rotor_indices[n] = (sizeof(rotor_vertices)- i+1);
+									 
+				n = i * 3;
+					 rotor_indices[n] = 54;//(sizeof(rotor_vertices)- 4);
 					 rotor_indices[n + 1] = i*6;
 					 rotor_indices[n + 2] = 3+i*6;				 
 	}
+
+	//for (int i = 1; i < 4; i++){
+	//	int n = sizeof(rotor_vertices) - i;
+		rotor_vertices[56] = 0;
+		rotor_vertices[55] = 0;
+		rotor_vertices[54] = 0;
+	//}
 						
 	glBindBufferARB(GL_ARRAY_BUFFER_ARB, this->rotor_vbuf[0]);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(rotor_vertices), rotor_vertices, GL_STATIC_DRAW);
@@ -205,6 +199,13 @@ void PaddleGlDrawable::visualize(::view::GlRenderer& r, ::view::GlutWindow& w){
 	glNormalPointer(GL_FLOAT, 0, NULL);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER_ARB, ring_vbuf[2]);
 	glDrawElements(GL_TRIANGLES, ring_seg1 * ring_seg2 * 6, GL_UNSIGNED_INT, NULL);
+
+	glBindBuffer(GL_ARRAY_BUFFER, rotor_vbuf[0]);
+	glVertexPointer(3, GL_FLOAT, 0, NULL);
+	glBindBuffer(GL_ARRAY_BUFFER, rotor_vbuf[1]);
+	glNormalPointer(GL_FLOAT, 0, NULL);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER_ARB, rotor_vbuf[2]);
+	glDrawElements(GL_TRIANGLES, sizeof(rotor_vbuf), GL_UNSIGNED_INT, NULL);
 
 	glDisable(GL_LIGHTING);
 
