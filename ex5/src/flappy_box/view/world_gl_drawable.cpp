@@ -80,30 +80,15 @@ void WorldGlDrawable::visualize(::view::GlRenderer& r, ::view::GlutWindow& w)
 	//glDisable(GL_NORMALIZE);
 
 	
-	//Textausgabe
-	// Ausgabe für die Punktanzahl
-	char text_p[32];
-	sprintf(text_p, "Punkte: %d", _model->getPlayerPoints());
-	glColor3f(2, 0.5, 0.5);
-	glRasterPos3f(-30, -50, -10);
-	for (const char* c = text_p; *c != '\0'; c++)
-		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, *c);
-
-	// Ausgabe für die Anzahl der Leben
-	char text_l[32];
-	sprintf(text_l, "Leben: %d", _model->_getRemainingLives());
-	glColor3f(2, 0.5, 0.5);
-	glRasterPos3f(-30, -50, -13);
-	for (int i = 0; text_l[i] != '\0'; i++)
-		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, text_l[i]);
-
+	
 
 	glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
 
 
 	glPopMatrix(); {
 		//rechts
-		glEnable(GL_DEPTH_TEST);
+		glDisable(GL_DEPTH_TEST);
+		//glEnable(GL_DEPTH_TEST);
 		//Hintergrund
 		//glEnable(GL_TEXTURE_2D); {
 		//glBindTexture(GL_TEXTURE_2D, worldTexture);
@@ -160,7 +145,24 @@ void WorldGlDrawable::visualize(::view::GlRenderer& r, ::view::GlutWindow& w)
 		glVertex3d(-_model->getWorldHalfWidth(), -50, -_model->getWorldHalfHeight());
 		glEnd();
 		//}glDisable(GL_TEXTURE_2D);
+		glEnable(GL_DEPTH_TEST);
 	}glPushMatrix();
+	//Textausgabe
+	// Ausgabe für die Punktanzahl
+	glEnable(GL_DEPTH_TEST);
+	char text_p[32];
+	sprintf(text_p, "Punkte: %d", _model->getPlayerPoints());
+	glColor3f(2, 0.5, 0.5);
+	glRasterPos3f(-30, -50, -10);
+	for (const char* c = text_p; *c != '\0'; c++)
+		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, *c);
 
+	// Ausgabe für die Anzahl der Leben
+	char text_l[32];
+	sprintf(text_l, "Leben: %d", _model->_getRemainingLives());
+	glColor3f(2, 0.5, 0.5);
+	glRasterPos3f(-30, -50, -13);
+	for (int i = 0; text_l[i] != '\0'; i++)
+		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, text_l[i]);
 }
 
