@@ -8,7 +8,7 @@ using namespace ::flappy_box::view;
 
 
 WorldGlDrawable::WorldGlDrawable(const std::shared_ptr< ::flappy_box::model::World >& b)
-: _model( b )
+	: _model(b)
 {
 	// allocate buffer
 	wwidth = 128;
@@ -45,7 +45,7 @@ WorldGlDrawable::~WorldGlDrawable()
 
 void WorldGlDrawable::visualize(::view::GlRenderer& r, ::view::GlutWindow& w)
 {
-	
+
 
 
 	// TODO: Replace old rendering code with new and improved rendering - Aufgabe 5.3
@@ -79,8 +79,8 @@ void WorldGlDrawable::visualize(::view::GlRenderer& r, ::view::GlutWindow& w)
 	//glDisable(GL_COLOR_MATERIAL);
 	//glDisable(GL_NORMALIZE);
 
-	
-	
+
+
 
 	glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
 

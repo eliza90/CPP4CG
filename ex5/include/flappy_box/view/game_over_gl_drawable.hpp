@@ -6,19 +6,19 @@
 
 namespace flappy_box
 {
-  namespace view
-  {
-	  class GameOverGlDrawable : public ::view::GlRenderer::Drawable
-    {
-      public:
+	namespace view
+	{
+		class GameOverGlDrawable : public ::view::GlRenderer::Drawable
+		{
+		public:
 
-		  GameOverGlDrawable(const std::shared_ptr< model::GameOver>&);
-		  virtual ~GameOverGlDrawable();
-        virtual void visualize( ::view::GlRenderer&, ::view::GlutWindow& ) override;
-		
-      private:
-        std::shared_ptr< model::GameOver const > _model;
+			GameOverGlDrawable(const std::shared_ptr< model::GameOver>&);
+			virtual ~GameOverGlDrawable();
+			virtual void visualize(::view::GlRenderer&, ::view::GlutWindow&) override;
 
-    }; // BoxGlDrawable
-  }
+		private:
+			std::shared_ptr< model::GameOver const > _model;
+
+		}; // BoxGlDrawable
+	}
 }
