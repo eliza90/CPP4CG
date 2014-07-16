@@ -10,9 +10,30 @@ using namespace ::flappy_box::view;
 WorldGlDrawable::WorldGlDrawable(const std::shared_ptr< ::flappy_box::model::World >& b)
 : _model( b )
 {
-	
-	
-	
+	// allocate buffer
+	wwidth = 128;
+	wheight = 128;
+	textureCoord = new unsigned char[(wwidth * wheight * 3)];
+
+	// open texture data
+	wFile = fopen("../../res/theheader.raw", "rb");
+	if (wFile == NULL){
+		std::cout << "No Texture found!" << std::endl;
+	}
+	else {
+		std::cout << "Texture found!" << std::endl;
+		// read texture data
+		fread(textureCoord, wwidth * wheight * 3, 1, wFile);
+		fclose(wFile);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, wwidth, wheight, 0, GL_RGB, GL_UNSIGNED_BYTE, textureCoord);
+	}
+
+	glGenTextures(1, &worldTexture); // allocate a texture name
+	glBindTexture(GL_TEXTURE_2D, worldTexture); // select our current texture
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
 }
 
